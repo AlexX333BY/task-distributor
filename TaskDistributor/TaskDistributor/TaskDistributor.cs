@@ -11,11 +11,8 @@ namespace TaskDistributor
 
             if (people.Count != 0)
             {
-                uint minTasksCount = (uint)(tasksCount / people.Count), maxTasksCount = minTasksCount;
-                if (tasksCount % people.Count != 0)
-                {
-                    ++maxTasksCount;
-                }
+                uint minTasksCount = (uint)(tasksCount / people.Count);
+                uint evenlyDistributedTasks = (uint)(minTasksCount * people.Count);
 
                 foreach (string person in people)
                 {
@@ -26,13 +23,25 @@ namespace TaskDistributor
                 Random random = new Random();
                 string chosenPerson;
 
-                for (uint i = 0; i < tasksCount; ++i)
+                for (uint i = 0; i < evenlyDistributedTasks; ++i)
                 {
                     chosenPerson = copiedPeople[random.Next(copiedPeople.Count)];
                     result[chosenPerson].Add(i + 1);
 
-                    if (result[chosenPerson].Count == maxTasksCount)
+                    if (result[chosenPerson].Count == minTasksCount)
                     {
+                        copiedPeople.Remove(chosenPerson);
+                    }
+                }
+
+                if (evenlyDistributedTasks != tasksCount)
+                {
+                    copiedPeople = new List<string>(people);
+
+                    for (uint i = evenlyDistributedTasks; i < tasksCount; ++i)
+                    {
+                        chosenPerson = copiedPeople[random.Next(copiedPeople.Count)];
+                        result[chosenPerson].Add(i + 1);
                         copiedPeople.Remove(chosenPerson);
                     }
                 }
