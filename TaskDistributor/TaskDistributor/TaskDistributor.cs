@@ -5,7 +5,7 @@ namespace TaskDistributor
 {
     public static class TaskDistributor
     {
-        public static Dictionary<string, List<uint>> Distribute(List<string> people, uint tasksCount)
+        public static Dictionary<string, List<uint>> Distribute(IList<string> people, uint tasksCount)
         {
             Dictionary<string, List<uint>> result = new Dictionary<string, List<uint>>(people.Count);
 
