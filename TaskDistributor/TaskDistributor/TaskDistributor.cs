@@ -25,33 +25,36 @@ namespace TaskDistributor
 
                 foreach (string person in people)
                 {
-                    result[person] = new List<int>();
+                    result[person] = new List<int>(minTasksCount);
                 }
 
-                List<string> copiedPeople = new List<string>(people);
-                Random random = new Random();
-                string chosenPerson;
-
-                for (int i = 0; i < evenlyDistributedTasks; ++i)
+                if (tasksCount != 0)
                 {
-                    chosenPerson = copiedPeople[random.Next(copiedPeople.Count)];
-                    result[chosenPerson].Add(i + 1);
+                    List<string> copiedPeople = new List<string>(people);
+                    Random random = new Random();
+                    string chosenPerson;
 
-                    if (result[chosenPerson].Count == minTasksCount)
-                    {
-                        copiedPeople.Remove(chosenPerson);
-                    }
-                }
-
-                if (evenlyDistributedTasks != tasksCount)
-                {
-                    copiedPeople = new List<string>(people);
-
-                    for (int i = evenlyDistributedTasks; i < tasksCount; ++i)
+                    for (int i = 1; i <= evenlyDistributedTasks; ++i)
                     {
                         chosenPerson = copiedPeople[random.Next(copiedPeople.Count)];
-                        result[chosenPerson].Add(i + 1);
-                        copiedPeople.Remove(chosenPerson);
+                        result[chosenPerson].Add(i);
+
+                        if (result[chosenPerson].Count == minTasksCount)
+                        {
+                            copiedPeople.Remove(chosenPerson);
+                        }
+                    }
+
+                    if (evenlyDistributedTasks != tasksCount)
+                    {
+                        copiedPeople = new List<string>(people);
+
+                        for (int i = evenlyDistributedTasks + 1; i <= tasksCount; ++i)
+                        {
+                            chosenPerson = copiedPeople[random.Next(copiedPeople.Count)];
+                            result[chosenPerson].Add(i);
+                            copiedPeople.Remove(chosenPerson);
+                        }
                     }
                 }
             }
