@@ -17,7 +17,7 @@ namespace TaskDistributor.CliRunner
 
             try
             {
-                foreach (KeyValuePair<string, List<uint>> personTasks in TaskDistributor.Distribute(File.ReadAllLines(args[0]), uint.Parse(args[1])))
+                foreach (KeyValuePair<string, List<int>> personTasks in TaskDistributor.Distribute(File.ReadAllLines(args[0]), int.Parse(args[1])))
                 {
                     Console.WriteLine("{0}: {1}", personTasks.Key, string.Join(", ", personTasks.Value.Select((task) => task.ToString())));
                 }

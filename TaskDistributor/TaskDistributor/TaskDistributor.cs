@@ -5,25 +5,25 @@ namespace TaskDistributor
 {
     public static class TaskDistributor
     {
-        public static Dictionary<string, List<uint>> Distribute(IList<string> people, uint tasksCount)
+        public static Dictionary<string, List<int>> Distribute(IList<string> people, int tasksCount)
         {
-            Dictionary<string, List<uint>> result = new Dictionary<string, List<uint>>(people.Count);
+            Dictionary<string, List<int>> result = new Dictionary<string, List<int>>(people.Count);
 
             if (people.Count != 0)
             {
-                uint minTasksCount = (uint)(tasksCount / people.Count);
-                uint evenlyDistributedTasks = (uint)(minTasksCount * people.Count);
+                int minTasksCount = tasksCount / people.Count;
+                int evenlyDistributedTasks = minTasksCount * people.Count;
 
                 foreach (string person in people)
                 {
-                    result[person] = new List<uint>();
+                    result[person] = new List<int>();
                 }
 
                 List<string> copiedPeople = new List<string>(people);
                 Random random = new Random();
                 string chosenPerson;
 
-                for (uint i = 0; i < evenlyDistributedTasks; ++i)
+                for (int i = 0; i < evenlyDistributedTasks; ++i)
                 {
                     chosenPerson = copiedPeople[random.Next(copiedPeople.Count)];
                     result[chosenPerson].Add(i + 1);
@@ -38,7 +38,7 @@ namespace TaskDistributor
                 {
                     copiedPeople = new List<string>(people);
 
-                    for (uint i = evenlyDistributedTasks; i < tasksCount; ++i)
+                    for (int i = evenlyDistributedTasks; i < tasksCount; ++i)
                     {
                         chosenPerson = copiedPeople[random.Next(copiedPeople.Count)];
                         result[chosenPerson].Add(i + 1);
