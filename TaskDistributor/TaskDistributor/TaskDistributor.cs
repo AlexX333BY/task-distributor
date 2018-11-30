@@ -7,6 +7,15 @@ namespace TaskDistributor
     {
         public static Dictionary<string, List<int>> Distribute(IList<string> people, int tasksCount)
         {
+            if (people == null)
+            {
+                throw new ArgumentNullException(nameof(people), "People list shouldn't be null");
+            }
+            if (tasksCount < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(tasksCount), "Tasks count should be non-negative");
+            }
+
             Dictionary<string, List<int>> result = new Dictionary<string, List<int>>(people.Count);
 
             if (people.Count != 0)
